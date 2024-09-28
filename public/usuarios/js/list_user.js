@@ -3,8 +3,7 @@ $(document).ready(function () {
     $('#formPesquisa').submit(function(e) {
         e.preventDefault();
 
-       var nome = $('input[name="chave"]').value;
-
+       var nome = $('input[name="chave"]').val();
        retornaDados(nome);
     });  
 });
@@ -30,33 +29,17 @@ function retornaDados(nome){
                 var items = data.dados;
                 var tbody = $('#tabelaUsuarios tbody');
 
+                tbody.empty();
+
                 items.forEach(function(item) {
-
-                    if (item.ativo === '-1'){
-                        item.ativo = '<i class="fa fa-circle" style="color: green !important;">';
-                    }else
-                    {
-                        item.ativo = '<i class="fa fa-circle" style="color: red !important;">';
-                    }
-
-                    if (item.permissao === '1'){
-                        item.permissao = 'Administrador';
-                    }else
-                    {
-                        item.permissao = 'Padrão';
-                    }
 
 
                     var row = `<tr>
                         <td>${item.id}</td>
                         <td class="hidden-phone">${item.usuario}</td>
                         <td>${item.nome}</td>
-                        <td>${item.permissao}</td>
-                        <td>${item.ultevento}</td>
-                        <td>${item.ativo}</td>
-                        <td>${item.empresa}</td>
                         <td>
-                        <button onclick="alterar(${item.id})" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button>
+                        <a href="user.php?id=${item.id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
                         </td>
                         <td></td>
                     </tr>`;

@@ -1,25 +1,17 @@
 <?php
 
-    namespace app\database;
+namespace app\database;
 
 
-    class config{
+class config
+{
 
-    const IP_DATABASE_MYSQL_REDHAT = '177.85.252.150';
-    const USER_DATABASE_MYSQL_REDHAT = 'txc';
-    const PASS_DATABASE_MYSQL_REDHAT = 'Ti@2015!*';
-    const NAME_DATABASE_MYSQL_REDHAT = 'txc_db_wms';
+    const IP_DATABASE_MYSQL_REDHAT = 'localhost';
+    const USER_DATABASE_MYSQL_REDHAT = 'root';
+    const PASS_DATABASE_MYSQL_REDHAT = 'Ca190799';
+    const NAME_DATABASE_MYSQL_REDHAT = 'hamburguer';
     const PORT_DATABASE_MYSQL_REDHAT = '3306';
 
-    const SYS_MAINTENANCE = false; 
+    const SYS_MAINTENANCE = false;
 
-    const IP_DATABASE_DB_ERP = '143.0.121.60';
-    const USER_DATABASE_DB_ERP = 'txc';
-    const PASS_DATABASE_DB_ERP = 'VEqkGk$086CH';
-    const NAME_DATABASE_DB_ERP = 'TXC_PG';
-    const PORT_DATABASE_DB_ERP = '5432';
-
-
-    }
-
-?>
+}

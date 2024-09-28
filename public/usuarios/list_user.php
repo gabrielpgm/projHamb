@@ -50,10 +50,6 @@ $ger->imprimir('
                             <th><i class="fa fa-code"></i> Código</th>
                             <th class="hidden-phone"><i class="fa fa-user"></i> Usuário</th>
                             <th><i class="fa fa-id-badge"></i> Nome Completo</th>
-                            <th><i class="fa fa-key"></i> Permissão</th>
-                            <th><i class="fa fa-calendar-times-o"></i> Último evento</th>
-                            <th><i class="fa fa-info-circle"></i> Ativo</th>
-                            <th><i class="fa fa-sitemap"></i> Empresa</th>
                             <th><i class="fa fa-cog"></i> Painel</th>
                             <th></th>
                           </tr>

@@ -1,195 +1,159 @@
 <?php
 
-    namespace app\src\theme;
+namespace app\src\theme;
 
-    include_once(__DIR__ . "/../../public/gerais.php");
-    include_once(__DIR__ . "/../../database/database.php");
-    include_once(__DIR__ . "/../config/config_system.php");
+include_once(__DIR__ . "/../../public/gerais.php");
+include_once(__DIR__ . "/../../database/database.php");
+include_once(__DIR__ . "/../config/config_system.php");
 
-    use app\public_\gerais;
-    use app\database\connect;
-    use app\config\setting;
-    
-    class construct_theme
-    {
+use app\public_\gerais;
+use app\database\connect;
+use app\config\setting;
 
-        
-
-        public function construct_head($login = false){
+class construct_theme
+{
 
 
-          
-            
 
-            $ger = new gerais();
-
-            $path = "../../assets/";
-
-            $ger->imprimir('<head>');
-            $ger->imprimir('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-            $ger->imprimir('<meta name="description" content="Sistema XISTECH WMS - Desenvolvimento Interno TXC">');
-            $ger->imprimir('<meta name="author" content="Chrystopher Castro">');
-            $ger->imprimir('<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">');
-            $ger->imprimir('<title>LogiControl - WMS</title>');
-
-            //Icones
-
-            $ger->imprimir('<link href="' . $path . 'img/favicon.png" rel="icon">');
-            $ger->imprimir('<link href="' . $path . 'img/apple-touch-icon.png" rel="apple-touch-icon">');
-
-            //Importação de CSS 
-            $ger->imprimir('<link href="' . $path . 'lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">');
-            $ger->imprimir('<link href="' . $path . 'lib/font-awesome/css/font-awesome.css" rel="stylesheet">');
-            $ger->imprimir('<link rel="stylesheet" type="text/css" href="' . $path . 'css/zabuto_calendar.css">');
-            $ger->imprimir('<link rel="stylesheet" type="text/css" href="' . $path . 'lib/gritter/css/jquery.gritter.css" />');
-            $ger->imprimir('<link href="' . $path . 'css/style.css" rel="stylesheet">');
-            $ger->imprimir('<link href="' . $path . 'css/style-responsive.css" rel="stylesheet">');
+  public function construct_head($login = false)
+  {
 
 
-            //JAVA SCRIPT
-            $ger->imprimir('<script src="' . $path . 'lib/chart-master/Chart.js"></script>');
-            $ger->imprimir('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>');
-            $ger->imprimir('<script src="' . $path . 'msg.js"></script>');
-            $ger->imprimir('</head>');
-
-        }
 
 
-        public function construct_menu(){
 
-            $ger = new gerais();
+    $ger = new gerais();
 
-            $path = "../../assets/";
+    $path = "../../assets/";
 
-            include_once(__DIR__ . "/../access/check_access.php");
+    $ger->imprimir('<head>');
+    $ger->imprimir('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    $ger->imprimir('<meta name="description" content="">');
+    $ger->imprimir('<meta name="author" content="Gabriel Amaro">');
+    $ger->imprimir('<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">');
+    $ger->imprimir('<title>Hamburguer</title>');
 
-            //HEADER DE CIMA
-            $ger->imprimir('<header class="header black-bg">');
-            $ger->imprimir('    <div class="sidebar-toggle-box">');
-            $ger->imprimir('        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>');
-            $ger->imprimir('    </div>');
-            $ger->imprimir('    <a href="../home/index.php" class="logo"><b>LogiControl<span> WMS</span></b></a>');
-            $ger->imprimir('    <div class="top-menu">');
-            $ger->imprimir('        <ul class="nav pull-right top-menu">');
-            $ger->imprimir('            <li><a class="logout" href="../login/">Logout</a></li>');
-            $ger->imprimir('        </ul>');
-            $ger->imprimir('    </div>');
-            $ger->imprimir('</header>');
+    //Icones
 
-            //CARREGA MENU DINAMICO
+    $ger->imprimir('<link href="' . $path . 'img/favicon.png" rel="icon">');
+    $ger->imprimir('<link href="' . $path . 'img/apple-touch-icon.png" rel="apple-touch-icon">');
 
-            $ger->imprimir('<aside>');
-            $ger->imprimir('    <div id="sidebar" class="nav-collapse ">');
-            $ger->imprimir('        <p style="margin-top: 70px;" class="centered"><a href="#"><img src="' . $path . 'img/user_profile.png" class="img-circle" width="80"></a></p>');
-            $ger->imprimir('        <h5 class="centered">' . $nome_geral . '</h5>');
-            $ger->imprimir('        <p class="centered">Empresa: ' . $empresa_geral . '</p>');
-            $ger->imprimir('        <ul class="sidebar-menu" id="nav-accordion">');
-
-            //CARREGA MENUS
-
-                $this->construct_menu_dinamico();
-            
-
-            $ger->imprimir('        </ul>');
-            $ger->imprimir('    </div>');
-            $ger->imprimir('</aside>');
-
-        }
-
-        function construct_menu_dinamico()
-        {
-            $ger = new gerais();
-            $bd = new connect();
-
-            $usuario = $_COOKIE['iduser_ck'];
-
-            $query_menu = "SELECT men.principal AS principal, men.subnivel AS subnivel, men.href AS href FROM 
-            txc_tb_acesso a
-            INNER JOIN txc_tb_nivel_acesso nv ON (nv.usuario = a.ID AND nv.liberado = -1)
-            INNER JOIN txc_tb_menu men ON (men.id = nv.nivel)
-            WHERE a.ID = $usuario AND men.prcp = -1
-            ORDER BY men.principal, men.subnivel";
-
-            $query_submenu = null;
-
-            $conn = $bd->getQueryMysql($query_menu);
-
-            if($conn)
-            {
-                $menu_label = null;
-
-                while($row = $conn->fetch_assoc())
-                {
-                    
-                    $menu_label = $row['principal'];
-
-                    $ger->imprimir('<li class="sub-menu">');
-                    $ger->imprimir('    <a href="javascript:;">');
-                    $ger->imprimir('        <i class="fa fa-angle-right"></i>');
-                    $ger->imprimir('        <span>' . $menu_label . '</span>');
-                    $ger->imprimir('    </a>');
-                    $ger->imprimir('        <ul class="sub">');
-
-                        $query_submenu = "SELECT men.principal AS principal, men.subnivel AS subnivel, men.href AS href FROM 
-                        txc_tb_acesso a
-                        INNER JOIN txc_tb_nivel_acesso nv ON (nv.usuario = a.ID AND nv.liberado = -1)
-                        INNER JOIN txc_tb_menu men ON (men.id = nv.nivel)
-                        WHERE a.ID = 1 AND men.prcp = 0 AND men.principal = '$menu_label'
-                        ORDER BY men.principal, men.subnivel";
+    //Importação de CSS 
+    $ger->imprimir('<link href="' . $path . 'lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">');
+    $ger->imprimir('<link href="' . $path . 'lib/font-awesome/css/font-awesome.css" rel="stylesheet">');
+    $ger->imprimir('<link rel="stylesheet" type="text/css" href="' . $path . 'css/zabuto_calendar.css">');
+    $ger->imprimir('<link rel="stylesheet" type="text/css" href="' . $path . 'lib/gritter/css/jquery.gritter.css" />');
+    $ger->imprimir('<link href="' . $path . 'css/style.css" rel="stylesheet">');
+    $ger->imprimir('<link href="' . $path . 'css/style-responsive.css" rel="stylesheet">');
 
 
-                        $conn_sub_menu = $bd->getQueryMysql($query_submenu);
-
-                        while($row_sub = $conn_sub_menu->fetch_assoc())
-                        {
-                            $subnivel = $row_sub['subnivel'];
-                            $href = $row_sub['href'];
-
-                            $ger->imprimir("            <li><a href='$href'>$subnivel</a></li>");
-                        }
-                    $ger->imprimir('        </ul>');
-                    $ger->imprimir('</li>');
-
-                }
-            }else{
-                $ger->imprimir('<h5 class="centered"></h5>');
-            }
+    //JAVA SCRIPT
+    $ger->imprimir('<script src="' . $path . 'lib/chart-master/Chart.js"></script>');
+    $ger->imprimir('<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>');
+    $ger->imprimir('<script src="' . $path . 'msg.js"></script>');
+    $ger->imprimir('</head>');
+  }
 
 
-        }
+  public function construct_menu()
+  {
+
+    $ger = new gerais();
+
+    $path = "../../assets/";
+
+    //HEADER DE CIMA
+    $ger->imprimir('<header class="header black-bg">');
+    $ger->imprimir('    <div class="sidebar-toggle-box">');
+    $ger->imprimir('        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>');
+    $ger->imprimir('    </div>');
+    $ger->imprimir('    <a href="../home/index.php" class="logo"><b>Hambur<span>gueria</span></b></a>');
+    $ger->imprimir('    <div class="top-menu">');
+    $ger->imprimir('        <ul class="nav pull-right top-menu">');
+    $ger->imprimir('            <li><a class="logout" href="../login/">Logout</a></li>');
+    $ger->imprimir('        </ul>');
+    $ger->imprimir('    </div>');
+    $ger->imprimir('</header>');
+
+    //CARREGA MENU DINAMICO
+
+    $ger->imprimir('<aside>');
+    $ger->imprimir('    <div id="sidebar" class="nav-collapse ">');
+    $ger->imprimir('        <p style="margin-top: 70px;" class="centered"><a href="#"><img src="' . $path . 'img/user_profile.png" class="img-circle" width="80"></a></p>');
+    $ger->imprimir('        <h5 class="centered">Hamburgueria</h5>');
+    $ger->imprimir('        <p class="centered"></p>');
+    $ger->imprimir('        <ul class="sidebar-menu" id="nav-accordion">');
+
+    //CARREGA MENUS
+
+    $this->construct_menu_dinamico();
 
 
-        public function construct_footer()
-        {
+    $ger->imprimir('        </ul>');
+    $ger->imprimir('    </div>');
+    $ger->imprimir('</aside>');
+  }
 
-            $path = "../../assets/";
-
-
-            $setting = new setting();
-            $ger = new gerais();
-            
-            $ger->imprimir('<footer class="site-footer">');
-            $ger->imprimir('    <div class="text-center">');
-            $ger->imprimir('        <p>&copy; Copyrights <strong>Textile Xtra Company</strong>. All Rights Reserved | Versão: ' . setting::VERSION_WMS . ' </p>');
-            $ger->imprimir('    </div>');
-            $ger->imprimir('</footer>');
-
-            //CHAMA JAVASCRIPT
-            $ger->imprimir('<script src="'. $path . 'lib/jquery/jquery.min.js"></script>');
-            $ger->imprimir('<script src="'. $path . 'lib/bootstrap/js/bootstrap.min.js"></script>');
-            $ger->imprimir('<script class="include" type="text/javascript" src="'. $path . 'lib/jquery.dcjqaccordion.2.7.js"></script>');
-            $ger->imprimir('<script src="' . $path . 'lib/jquery.scrollTo.min.js"></script>');
-            $ger->imprimir('<script src="' . $path . 'lib/jquery.nicescroll.js" type="text/javascript"></script>');
-            $ger->imprimir('<script src="' . $path .'lib/jquery.sparkline.js"></script>');
-            $ger->imprimir('<script src="' . $path .'lib/common-scripts.js"></script>');
-            $ger->imprimir('<script type="text/javascript" src="' . $path .'lib/gritter/js/jquery.gritter.js"></script>');
-            $ger->imprimir('<script type="text/javascript" src="' . $path .'lib/gritter-conf.js"></script>');
-            $ger->imprimir('<script src="' . $path .'lib/sparkline-chart.js"></script>');
-            $ger->imprimir('<script src="' . $path .'lib/zabuto_calendar.js"></script>');
-            
+  function construct_menu_dinamico()
+  {
 
 
-            $ger->imprimir("
+    $ger = new gerais();
+
+    $ger->imprimir('<li class="sub-menu">');
+    $ger->imprimir('    <a href="javascript:;">');
+    $ger->imprimir('        <i class="fa fa-angle-right">Administrativos</i>');
+    $ger->imprimir('        <span></span>');
+    $ger->imprimir('    </a>');
+    $ger->imprimir('        <ul class="sub">');
+    $ger->imprimir("            <li><a href=''></a></li>");
+    $ger->imprimir('        </ul>');
+    $ger->imprimir('</li>');
+
+
+    $ger->imprimir('<li class="sub-menu">');
+    $ger->imprimir('    <a href="javascript:;">');
+    $ger->imprimir('        <i class="fa fa-angle-right">Usuários</i>');
+    $ger->imprimir('        <span></span>');
+    $ger->imprimir('    </a>');
+    $ger->imprimir('        <ul class="sub">');
+    $ger->imprimir("            <li><a href='../usuarios/list_user.php'></a>Cadastrar</li>");
+    $ger->imprimir('        </ul>');
+    $ger->imprimir('</li>');
+  }
+
+
+  public function construct_footer()
+  {
+
+    $path = "../../assets/";
+
+
+    $setting = new setting();
+    $ger = new gerais();
+
+    $ger->imprimir('<footer class="site-footer">');
+    $ger->imprimir('    <div class="text-center">');
+    $ger->imprimir('        <p>&copy; Copyrights <strong></strong>. Versão: 1.0 </p>');
+    $ger->imprimir('    </div>');
+    $ger->imprimir('</footer>');
+
+    //CHAMA JAVASCRIPT
+    $ger->imprimir('<script src="' . $path . 'lib/jquery/jquery.min.js"></script>');
+    $ger->imprimir('<script src="' . $path . 'lib/bootstrap/js/bootstrap.min.js"></script>');
+    $ger->imprimir('<script class="include" type="text/javascript" src="' . $path . 'lib/jquery.dcjqaccordion.2.7.js"></script>');
+    $ger->imprimir('<script src="' . $path . 'lib/jquery.scrollTo.min.js"></script>');
+    $ger->imprimir('<script src="' . $path . 'lib/jquery.nicescroll.js" type="text/javascript"></script>');
+    $ger->imprimir('<script src="' . $path . 'lib/jquery.sparkline.js"></script>');
+    $ger->imprimir('<script src="' . $path . 'lib/common-scripts.js"></script>');
+    $ger->imprimir('<script type="text/javascript" src="' . $path . 'lib/gritter/js/jquery.gritter.js"></script>');
+    $ger->imprimir('<script type="text/javascript" src="' . $path . 'lib/gritter-conf.js"></script>');
+    $ger->imprimir('<script src="' . $path . 'lib/sparkline-chart.js"></script>');
+    $ger->imprimir('<script src="' . $path . 'lib/zabuto_calendar.js"></script>');
+
+
+
+    $ger->imprimir("
 
             <script type='application/javascript'> 
             
@@ -237,22 +201,5 @@
               }
               </script>
               ");
-
-        }
-
-    }
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-?>
+  }
+}

@@ -35,7 +35,7 @@
         $usuario = $usuario;
         $senha = $sec->encryptString($senha,'md5');
 
-        $query = "SELECT * FROM " . $setting::PREFIX_TABELAS . "acesso WHERE USUARIO = '$usuario' and SENHA = '$senha'  AND ativo = -1";
+        $query = "SELECT * FROM " . $setting::PREFIX_TABELAS . "usuarios WHERE usuario = '$usuario' and senha = '$senha'";
 
         $con_req = $bd->getQueryMysql($query);
         
@@ -43,14 +43,9 @@
         {
             while($row = $con_req->fetch_assoc())
             {
-                $usuario_geral = $row['USUARIO'];
-                $nome_geral = $row['NOME'];
-                $empresa_geral = $row['EMPRESA'];
-                $iduser_geral = $row['ID'];
-                $loem_geral = $row['LOEM'];
-                $local_geral = $row['LOCAL'];
+                $nome_geral = $row['nome'];
+                echo "$nome_geral";
 
-                
             }
         }else
         {
