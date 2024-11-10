@@ -13,10 +13,9 @@ $(document).ready(function () {
 
 function getCatExpand(dados) {
     $.ajax({
-        url: '../../app/src/categoria/categoria.php', 
+        url: '../../app/src/categoria/categoria.php?type=show_cat_expand', 
         type: 'GET',
         headers: {
-            'type': 'show_cat_expand',
             'dados': dados
         },
         success: function(response) {

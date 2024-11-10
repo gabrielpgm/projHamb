@@ -21,7 +21,6 @@ class construct_theme
 
 
 
-
     $ger = new gerais();
 
     $path = "../../assets/";
@@ -59,7 +58,7 @@ class construct_theme
   {
 
     $ger = new gerais();
-
+    include_once(__DIR__ . "/../access/check_access.php");
     $path = "../../assets/";
 
     //HEADER DE CIMA
@@ -70,7 +69,7 @@ class construct_theme
     $ger->imprimir('    <a href="../home/index.php" class="logo"><b>Hambur<span>gueria</span></b></a>');
     $ger->imprimir('    <div class="top-menu">');
     $ger->imprimir('        <ul class="nav pull-right top-menu">');
-    $ger->imprimir('            <li><a class="logout" href="../login/">Logout</a></li>');
+    $ger->imprimir('            <li><button onclick="logout();" class="logout" >Logout</button></li>');
     $ger->imprimir('        </ul>');
     $ger->imprimir('    </div>');
     $ger->imprimir('</header>');
@@ -81,7 +80,7 @@ class construct_theme
     $ger->imprimir('    <div id="sidebar" class="nav-collapse ">');
     $ger->imprimir('        <p style="margin-top: 70px;" class="centered"><a href="#"><img src="' . $path . 'img/user_profile.png" class="img-circle" width="80"></a></p>');
     $ger->imprimir('        <h5 class="centered">Hamburgueria</h5>');
-    $ger->imprimir('        <p class="centered"></p>');
+    $ger->imprimir('        <p class="centered">' . $nome_geral . '</p>');
     $ger->imprimir('        <ul class="sidebar-menu" id="nav-accordion">');
 
     //CARREGA MENUS
@@ -106,10 +105,10 @@ class construct_theme
     $ger->imprimir('        <span></span>');
     $ger->imprimir('    </a>');
     $ger->imprimir('        <ul class="sub">');
-    $ger->imprimir("            <li><a href='../produtos/list_categoria.php'></a>Categorias</li>");
+    $ger->imprimir("            <li><a href='../produtos/list_categoria.php'>Categorias</a></li>");
     $ger->imprimir('        </ul>');
     $ger->imprimir('        <ul class="sub">');
-    $ger->imprimir("            <li><a href='../produtos/list_prod.php'></a>Produtos</li>");
+    $ger->imprimir("            <li><a href='../produtos/list_prod.php'>Produtos</a></li>");
     $ger->imprimir('        </ul>');
     $ger->imprimir('</li>');
 
@@ -120,7 +119,7 @@ class construct_theme
     $ger->imprimir('        <span></span>');
     $ger->imprimir('    </a>');
     $ger->imprimir('        <ul class="sub">');
-    $ger->imprimir("            <li><a href='../usuarios/list_user.php'></a>Cadastrar</li>");
+    $ger->imprimir("            <li><a href='../usuarios/list_user.php'>Cadastrar</a></li>");
     $ger->imprimir('        </ul>');
     $ger->imprimir('</li>');
   }

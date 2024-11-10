@@ -27,22 +27,19 @@ $json = null;
 $ger->doc_json();
 
 
-//Já leio todos os parametros do cabeçalho
-$headers = getallheaders();
-
 
 
 //AQUI IDENTIFICA O METODO DA PÁGINA
 
 if ($metodo == "GET") {
 
-    $tipo = isset($headers['type']) ? $headers['type'] : null;
+    $tipo = isset($_GET['type']) ? $_GET['type'] : null;
 
 
     switch ($tipo) {
         case 'show_cat_only':
             //AQUI RETORNO O JSON DE UMA SÓ CATEGORIA
-            $id = isset($headers['id']) ? $headers['id'] : null;
+            $id = isset($_GET['id']) ? $_GET['id'] : null;
 
             if (is_null($id)) {
                 http_response_code(405);

@@ -44,7 +44,6 @@
             while($row = $con_req->fetch_assoc())
             {
                 $nome_geral = $row['nome'];
-                echo "$nome_geral";
 
             }
         }else

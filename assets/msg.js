@@ -16,3 +16,23 @@ function mensagem(icone,mensagem)
         title: mensagem
       });
 }
+
+function logout()
+{
+
+  $.ajax({
+    url: "../../app/src/access/logout.php",
+    type: "GET",
+    async: true,
+    success: function(data){
+        window.location.href = "../login"
+    },error: function(jqXHR, textStatus, errorThrown)
+    {
+        console.error("Erro na requisição AJAX:", textStatus, errorThrown);
+        console.error("Resposta do servidor:", jqXHR.responseText);
+    }
+
+
+});
+
+}
