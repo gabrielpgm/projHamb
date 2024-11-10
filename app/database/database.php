@@ -49,6 +49,37 @@ class connect
         return $result;
     }
 
+    public function getSecureQueryMysql($query, $params = [], $paramTypes = '')
+    {
+        // Preparar a consulta
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            throw new \Exception("Erro ao preparar a consulta: " . $this->conn->error);
+        }
+
+        // Verifica se há parâmetros a serem vinculados
+        if (!empty($params)) {
+            // Vincular parâmetros (o primeiro argumento é uma string que representa os tipos de dados)
+            $stmt->bind_param($paramTypes, ...$params);
+        }
+
+        // Executa a consulta
+        if (!$stmt->execute()) {
+            throw new \Exception("Erro na execução da consulta: " . $stmt->error);
+        }
+
+        // Retorna o resultado
+        $result = $stmt->get_result();
+
+        // Se for uma consulta de seleção, retorna o resultado
+        if ($result) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+
+        return true;
+    }
+
     public function closeConnectMysql()
     {
         if ($this->conn instanceof \mysqli) {

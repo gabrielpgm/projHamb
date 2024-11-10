@@ -1,12 +1,29 @@
 $(document).ready(function () {
 
-    var usuario = getParameterByName('id');
+    var idusuario = getParameterByName('id')
     
 
-    if (usuario != 0 && usuario != null) {
+    if (idusuario != 0 && idusuario != null) {
 
-        retornUserId(usuario);
+        retornUserId(idusuario)
+
+        $('input[name="usuario"]').prop('disabled', true)
+
+    }else{
+        idusuario == 0
     }
+
+    $('#formPesquisa').submit(function(e) {
+
+        var usuario = $('input[name="usuario"]').val()
+        var senha = $('input[name="senha"]').val()
+        var nome = $('input[name="nome"]').val()
+
+
+
+        gravaUsuario(idusuario,nome,usuario,senha)
+
+    })
 
 });
 
@@ -27,6 +44,27 @@ function retornaNivel(usuario)
             console.error("Resposta do servidor:", jqXHR.responseText);
         }
     });
+}
+
+
+function gravaUsuario(id,nome,usuario,senha)
+{
+
+    $.ajax({
+        url: "../../app/src/users/users.php?tipo=gred_dados",
+        type: "POST",
+        data: {
+            dados: id,
+            usuario: usuario,
+            nome: nome,
+            senha: senha
+        },
+        success: function(data)
+        {
+            mensagem('success','Registro gravado com sucesso!')
+        }
+    })
+
 }
 
 function retornUserId(usuario) {

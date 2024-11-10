@@ -106,7 +106,10 @@ class construct_theme
     $ger->imprimir('        <span></span>');
     $ger->imprimir('    </a>');
     $ger->imprimir('        <ul class="sub">');
-    $ger->imprimir("            <li><a href=''></a></li>");
+    $ger->imprimir("            <li><a href='../produtos/list_categoria.php'></a>Categorias</li>");
+    $ger->imprimir('        </ul>');
+    $ger->imprimir('        <ul class="sub">');
+    $ger->imprimir("            <li><a href='../produtos/list_prod.php'></a>Produtos</li>");
     $ger->imprimir('        </ul>');
     $ger->imprimir('</li>');
 

@@ -37,7 +37,7 @@ $ger->imprimir('
                     <div class="form-group has-success">
                         <label class="col-lg-2 control-label">Nome do Usuário</label>
                         <div class="col-lg-10">
-                        <input type="text" placeholder="" id="f-name" name = "usuario" class="form-control" required>
+                        <input type="text" placeholder="" id="f-name" name = "usuario" class="form-control" required autofocus>
                         <p class="help-block">Este é o nome de usuário necessário para Login</p>
                         </div>
                     </div>
@@ -47,7 +47,7 @@ $ger->imprimir('
                     <div class="form-group has-success">
                         <label class="col-lg-2 control-label">Nome completo</label>
                         <div class="col-lg-10">
-                        <input type="text" placeholder="" id="f-name" name = "nome" class="form-control" required>
+                        <input type="text" placeholder="" id="f-name" name = "nome" class="form-control" required autofocus>
                         <p class="help-block">Este é o nome de Exibição para o usuário</p>
                         </div>
                     </div>
