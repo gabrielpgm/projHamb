@@ -1,27 +1,27 @@
 $(document).ready(function () {
-        $('#formPesquisa').submit(function(e) {
+   
+    $('#formPesquisa').submit(function(e) {
         e.preventDefault();
 
-       var descricao = $('input[name="descricao"]').val();
-       gravar(descricao);     
-    });  
+        // Captura o valor da descrição
+        var descricao = $('input[name="descricao"]').val();
+        
+        // Chama a função para gravar
+        gravar(descricao);     
+    });
 
+    // Verifica se há um 'id' na URL (edição de categoria)
     var id = getParameterByName("id");
-    if(id != 0){
+    if (id != 0) {
         retorna(id);
     }
 });
 
-
-
 function retorna(id) {
     $.ajax({
-        url: '../../app/src/categoria/categoria.php?type=show_cat_only&id=' + id,
+        url: '../../app/src/categoria/categoria.php?type=show_cat_only&id=' + id, // Requisição GET
         type: 'GET',
         dataType: 'json', 
-        headers: {
-            'Accept': 'application/json' 
-        },
         success: function(response) {
             console.log(response.data[0].descricao);
             $('input[name="descricao"]').val(response.data[0].descricao);
@@ -34,25 +34,28 @@ function retorna(id) {
     });
 }
 
-
-function gravar(descricao)
-{
-      $.ajax({
-        URL:'../../app/src/categoria/categoria.php',
+function gravar(descricao) {
+    $.ajax({
+        url: '../../app/src/categoria/categoria.php', // Requisição POST
         type: 'POST',
         dataType: 'json',
-        headers: {
-            'type': 'cad_cat',
-            'descricao': descricao
-        }, sucess: function (response){
-            console.log(response);
-        }, error: function(xhr){
-            console.log(xhr);
+        data: { // Envia os dados no corpo da requisição
+            type: 'cad_cat',
+            descricao: descricao
+        },
+        success: function(response) {
+            console.log("Categoria registrada:", response);
+            // Adicione aqui algum comportamento, como limpar o campo ou mostrar uma mensagem
+        },
+        error: function(xhr, status, error) {
+            console.error("Erro ao gravar a categoria:", error);
+            console.error("Status:", status);
+            console.error("Resposta completa:", xhr.responseText);
         }
-    })
-
+    });
 }
 
+// Função para pegar parâmetros da URL (ex: ?id=123)
 function getParameterByName(name, url = window.location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');
     let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
