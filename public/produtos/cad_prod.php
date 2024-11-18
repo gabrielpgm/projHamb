@@ -31,50 +31,65 @@ $ger->imprimir('
             <h4><i class="fa fa-angle-right"></i> Cadastro de Produtos</h4>
             
             <div class="form-panel">
-                <form id="formProduto" role="form" class="form-horizontal style-form" action="javascript:void(0);">
+                <form id="formProduto" role="form" class="form-horizontal style-form" action="javascript:void(0);" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="form-group has-success">
+                            <label class="col-lg-2 control-label">Nome</label>
+                            <div class="col-lg-10">
+                                <input type="text" placeholder="" id="f-name" name="productname" class="form-control" required autofocus>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="form-group has-success">
+                            <label class="col-lg-2 control-label">Descrição</label>
+                            <div class="col-lg-10">
+                                <input type="text" placeholder="" id="f-name" name="productdescription" class="form-control" required autofocus>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="container">
+                        <div class="form-group has-success">
+                            <label class="col-lg-2 control-label">Categoria</label>
+                            <div class="col-lg-10">
+                                <select class="form-control" id="optionscategoria" name="optionscategoria">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="container">
-                    <div class="form-group has-success">
-                        <label class="col-lg-2 control-label">Nome</label>
-                        <div class="col-lg-10">
-                        <input type="text" placeholder="" id="f-name" name = "productname" class="form-control" required autofocus>
+                    <div class="container">
+                        <div class="form-group has-success">
+                            <label class="col-lg-2 control-label">Preço</label>
+                            <div class="col-lg-10">
+                                <input type="text" placeholder="" id="f-name" name="productprice" class="form-control" required autofocus>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="form-group has-success">
-                        <label class="col-lg-2 control-label">Descrição</label>
-                        <div class="col-lg-10">
-                        <input type="text" placeholder="" id="f-name" name = "productdescription" class="form-control" required autofocus>
+                    
+                    <div class="container">
+                        <div class="form-group has-success">
+                            <label class="col-lg-2 control-label">Imagem</label>
+                            <div class="col-lg-10">
+                                <input type="file" name="imagem" accept="image/*" class="form-control">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="form-group has-success">
-                        <label class="col-lg-2 control-label">Categoria</label>
-                        <div class="col-lg-10">
-                            <select class="form-control" id="optionscategoria" name="optionscategoria">
-                        </select>
-                        
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="form-group has-success">
-                        <label class="col-lg-2 control-label">Preço</label>
-                        <div class="col-lg-10">
-                        <input type="text" placeholder="" id="f-name" name = "productprice" class="form-control" required autofocus>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="form-group d-flex align-items-center justify-content-center col-6">
-                    <div class="col-lg-offset-1">
-                    <a href="list_prod.php"><button class="btn btn-theme" type="submit">Gravar</button></a>
-                    <a href="list_prod.php"><button class="btn btn-danger d-none" id="botaodelete">Excluir</button></a>
+                    
+                    <div class="form-group d-flex align-items-center justify-content-center col-6">
+                        <div class="col-lg-offset-1">
+                            <button class="btn btn-theme" type="submit">Gravar</button>
+                            <a href="list_prod.php">
+
+                            <button class="btn btn-danger d-none" id="botaodelete">
+                                Excluir
+                            </button></a>
+                        </div>
                     </div>
-                </div>
-                </form>
+            </form>
+
                 
                 
 

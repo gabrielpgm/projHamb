@@ -30,13 +30,6 @@ $ger->doc_json();
 if($metodo == "GET"){
 
     switch ($tipo) {
-        case 'cad_prod': 
-            $productname = @$_POST['productname'];
-            $productdescription = @$_POST['productdescription'];
-            $productprice = @$_POST['productprice'];
-            $optionscategoria = @$_POST['optionscategoria'];
-            $retorno = cad_prod($productname,$productdescription,$productprice,$optionscategoria);
-            break;    
         case 'show_produtos':
             $retorno = show_prod($dados);
             break;
@@ -57,7 +50,11 @@ if($metodo == "GET"){
             $productdescription = @$_POST['productdescription'];
             $productprice = @$_POST['productprice'];
             $optionscategoria = @$_POST['optionscategoria'];
-            $retorno = cad_prod($id,$productname,$productdescription,$productprice,$optionscategoria);
+            
+            // Aqui, passamos $_FILES['imagem'] em vez de $_POST['imagem']
+            $imagem = isset($_FILES['imagem']) ? $_FILES['imagem'] : null; 
+            
+            $retorno = cad_prod($id, $productname, $productdescription, $productprice, $optionscategoria, $imagem);
             break; 
         case 'delete_prod':
             $retorno = delete_prod($dados);
@@ -65,8 +62,10 @@ if($metodo == "GET"){
         default:
             $retorno = $tipo;
             break;
-        }
-        }
+    }
+}
+
+
 
 $ger->imprimir($retorno);
 
@@ -114,30 +113,68 @@ function gred_dados($id, $usuario, $nome, $senha)
         return $retorno;
     }
 }
-function cad_prod($id,$productname,$productdescription,$productprice,$optionscategoria){
+function cad_prod($id, $productname, $productdescription, $productprice, $optionscategoria, $imagem){
     global $setting;
     $bd = new connect();
-    if($id == 0){
-        $query = "INSERT INTO " . $setting::PREFIX_TABELAS . "produtos (nome, descricao, preco,categoria) values ('$productname', '$productdescription', '$productprice', '$optionscategoria')";
-        
-        $con = $bd->getQueryMysql($query);
-        
-        if ($con) {
-            $retorno = array('code' => 200, 'msg' => 'Cadastro de Produto Criado');
-            $retorno = json_encode($retorno);
-            return $retorno;
+
+    // Pasta para armazenar a imagem
+    $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/public/uploads/";
+
+    // Verifica se o diretório existe, caso contrário, cria
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    // Definindo as extensões válidas
+    $validExtensions = ['jpg', 'jpeg', 'png'];
+    $ext = strtolower(pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION));
+
+    // Verificando se a extensão é válida
+    if (!in_array($ext, $validExtensions)) {
+        return json_encode(array('code' => 400, 'msg' => 'Formato de imagem não permitido.'));
+    }
+
+    // Verifica se uma imagem foi enviada com sucesso
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
+        $imagemNome = uniqid('img_') . '.' . pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+        $imagemPath = $uploadDir . $imagemNome;
+    
+        // Verifique se o arquivo foi movido corretamente
+        if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $imagemPath)) {
+            error_log("Erro ao mover a imagem para a pasta de uploads: " . $_FILES['imagem']['error']);
+        } else {
+            error_log("Imagem salva com sucesso: " . $imagemPath);
         }
-    }else if($id > 0){
-            $query = "UPDATE " . $setting::PREFIX_TABELAS . "produtos SET descricao = '$productdescription', nome = '$productname', preco = '$productprice', categoria = '$optionscategoria' where id in ('$id')";
-          
-           $con = $bd->getQueryMysql($query);
-       if ($con) {
-           $retorno = array('code' => 200, 'msg' => 'Cadastro de Produto Atualizado');
-           $retorno = json_encode($retorno);
-           return $retorno;
-       } 
+    } else {
+        error_log("Erro no upload da imagem: " . $_FILES['imagem']['error']);
+    }
+    
+    
+    // Verifique se o ID é 0 (novo produto) ou se está fazendo atualização
+    if ($id == 0) {
+        // Inserir novo produto
+        $query = "INSERT INTO " . $setting::PREFIX_TABELAS . "produtos (nome, descricao, preco, categoria, imagem) 
+                  VALUES ('$productname', '$productdescription', '$productprice', '$optionscategoria', '$imagemNome')";
+        $con = $bd->getQueryMysql($query);
+    } else {
+        // Atualizar produto existente
+        $query = "UPDATE " . $setting::PREFIX_TABELAS . "produtos 
+                  SET descricao = '$productdescription', imagem = '$imagemNome', nome = '$productname', preco = '$productprice', categoria = '$optionscategoria' 
+                  WHERE id = '$id'";
+        $con = $bd->getQueryMysql($query);
+    }
+
+    if ($con) {
+        return json_encode(array('code' => 200, 'msg' => 'Produto salvo com sucesso.'));
+    } else {
+        return json_encode(array('code' => 500, 'msg' => 'Erro ao salvar produto.'));
     }
 }
+
+
+
+
+
 
 function show_prod($dados){
     global $bd;

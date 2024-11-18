@@ -4,15 +4,16 @@ $(document).ready(function () {
     getCategorialist('');
     fillProdutos(id);
     $('#formProduto').submit(function(e){
-        var productname = $('input[name="productname"]').val()
-        var productdescription = $('input[name="productdescription"]').val()
+        var productname = $('input[name="productname"]').val();
+        var productdescription = $('input[name="productdescription"]').val();
         var productprice = parseFloat($('input[name="productprice"]').val());
         var optionscategoria = $('select[name="optionscategoria"]').val()
+        var imagem = $('input[name="imagem"]').val();
 
         if(isNaN(productprice)){
-            alert("bota um numero macaco")
+            alert("Faltando Preço")
         }else{
-            saveProd(id,productname,productdescription,productprice,optionscategoria)
+            saveProd(id,productname,productdescription,productprice,optionscategoria,imagem)
         }
 
     });
@@ -45,17 +46,18 @@ $(document).ready(function () {
     }
 }
 
-function getCategorialist(dados) {
-    $.ajax({
+async function getCategorialist(dados) {
+    await $.ajax({
         url: '../../app/src/categoria/categoria.php', 
         type: 'GET',
         headers: {
             'type': 'show_cat_expand',
+            'Accept': 'application/json',
             'dados': dados
         },
         success: function(response) {
+            console.log(response);
             var categorias = response.data;
-
             var tbody = $('#optionscategoria');
             tbody.empty();
 
@@ -70,32 +72,47 @@ function getCategorialist(dados) {
     });
 }
 
-function saveProd (id,productname,productdescription,productprice,optionscategoria){
-        $.ajax({
-            url: "../../app/src/produto/produto.php",
-            dataType: 'json',
-            type: "POST",
-            headers: {
-                'type' : 'cad_prod'
-            },
-            data: {
-                id: id,
-                productname: productname,
-                productdescription: productdescription,
-                productprice: productprice,
-                optionscategoria: optionscategoria
-            },
-            success: function(data)
-            {
-                console.log(data);
-                window.location.href = 'list_prod.php'
-            },
-            error: function(xhr, status, error) {
-                console.log('Retorno: ' + error + status + xhr);
+function saveProd(id, productname, productdescription, productprice, optionscategoria, imagem) {
+    let formData = new FormData();
+
+    // Adiciona os dados ao FormData
+    formData.append('id', id);
+    formData.append('productname', productname);
+    formData.append('productdescription', productdescription);
+    formData.append('productprice', productprice);
+    formData.append('optionscategoria', optionscategoria);
+
+    // Adiciona o arquivo de imagem ao FormData
+    const imageFile = $('input[name="imagem"]')[0].files[0];
+    if (imageFile) {
+        formData.append('imagem', imageFile);
+    }
+
+    $.ajax({
+        url: "../../app/src/produto/produto.php",
+        dataType: 'json',
+        type: "POST",
+        headers: {
+            'type': 'cad_prod'
+        },
+        data: formData,
+        contentType: false, // Necessário para envio de FormData
+        processData: false, // Não processar os dados
+        success: function (data) {
+            console.log(data);
+            if (data.code === 200) {
+                alert(data.msg);
+                window.location.href = 'list_prod.php';
+            } else {
+                alert('Erro: ' + data.msg);
             }
-        })
-    
+        },
+        error: function (xhr) {
+            console.log('Erro:', xhr.responseText);
+        }
+    });
 }
+
 
 async function fillProdutos(id){
     if(id == 0){

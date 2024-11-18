@@ -16,7 +16,9 @@ function getCatExpand(dados) {
         url: '../../app/src/categoria/categoria.php?type=show_cat_expand', 
         type: 'GET',
         headers: {
-            'dados': dados
+            'dados': dados,
+            'Accept': 'application/json',
+            'type':'show_cat_expand'
         },
         success: function(response) {
             console.log(response);

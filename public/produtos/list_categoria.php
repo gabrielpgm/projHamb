@@ -73,6 +73,6 @@ $theme->construct_footer();
 
 $ger->imprimir('</section>');
 
-$ger->get_js("js/list_categoria.js");
+$ger->get_js("js/list_categoria.js"); 
 
 $ger->imprimir('</body>');

@@ -8,33 +8,32 @@ $(document).ready(function () {
 
     var id = getParameterByName("id");
     if(id != 0){
-        retorna(id)
+        retorna(id);
     }
 });
 
 
-function retorna(idR)
-{
-    console.log(idR);
 
-    var endpoint = '../../app/src/categoria/categoria.php?type=show_cat_only&id=' + idR;
-
-    console.log(endpoint);
-
+function retorna(id) {
     $.ajax({
-        URL: endpoint,
+        url: '../../app/src/categoria/categoria.php?type=show_cat_only&id=' + id,
         type: 'GET',
-        success: function(Response){
-           console.log(Response);
-        },error: function(jqXHR, textStatus, errorThrown)
-        {
-            console.error("Erro na requisição AJAX:", textStatus, errorThrown);
-            console.error("Resposta do servidor:", jqXHR.responseText);
+        dataType: 'json', 
+        headers: {
+            'Accept': 'application/json' 
+        },
+        success: function(response) {
+            console.log(response.data[0].descricao);
+            $('input[name="descricao"]').val(response.data[0].descricao);
+        },
+        error: function(xhr, status, error) {
+            console.error("Erro na requisição:", error); 
+            console.error("Status:", status);
+            console.error("Resposta completa:", xhr.responseText); 
         }
-
-    })
-    console.log(URL);
+    });
 }
+
 
 function gravar(descricao)
 {

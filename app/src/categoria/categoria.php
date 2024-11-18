@@ -17,6 +17,7 @@ use app\config\setting;
 $setting = new setting();
 $ger = new gerais();
 $bd = new connect();
+$headers = getallheaders();
 
 
 $metodo = $_SERVER['REQUEST_METHOD'];
@@ -34,9 +35,10 @@ $ger->doc_json();
 if ($metodo == "GET") {
 
     $tipo = isset($_GET['type']) ? $_GET['type'] : null;
+    $tipeHeaders = isset($headers['type']) ? $headers['type'] : null;
 
 
-    switch ($tipo) {
+    switch ($tipeHeaders) {
         case 'show_cat_only':
             //AQUI RETORNO O JSON DE UMA SÓ CATEGORIA
             $id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -47,19 +49,12 @@ if ($metodo == "GET") {
             } else {
                 $json = get_cat_only($id);
             }
-
             break;
         case 'show_cat_expand':
-
-            //AQUI RETORNO O JSON DE UMA SÓ CATEGORIA
             $dados = isset($headers['dados']) ? $headers['dados'] : null;
-
             $json = show_cat_expand($dados);
-
             break;
-
         default:
-            # code...
             break;
     }
 } else if ($metodo == "POST") {
@@ -79,7 +74,7 @@ if ($metodo == "GET") {
 
     $id = isset($headers['id']) ? $headers['id'] : null;
 
-    if (is_null($id)) {
+    if (is_null($id)){
         http_response_code(405);
         $json = array("code" => 405, "message" => "Id não informado para deletar!");
     } else {
@@ -135,17 +130,23 @@ function show_cat_expand($dados)
 
     try {
 
-        $query = "SELECT * FROM tb_categoria WHERE descricao like ? ORDER BY descricao";
+        $query = "SELECT * FROM tb_categoria ORDER BY descricao";
 
         $parametros = ["%$dados%"];
 
         $tipoParametro = 's'; //s significa string e i inteiro, para cada parametro tem que passar uma letra
 
-        $con = $bd->getSecureQueryMysql($query, $parametros, $tipoParametro);
+        $con = $bd->getQueryMysql($query);
+        
 
-        if ($con) {
+        if ($con){
+            while ($row = $con -> fetch_assoc()){
+                $categorias[] = array(
+                    "id" => $row['id'],
+                    "descricao" => $row['descricao']
+                );}
             http_response_code(200);
-            $json = array("code" => 200, "message" => "Busca realizada com sucesso!", "data" => $con);
+            $json = array("code" => 200, "message" => "Busca realizada com sucesso!", "retorno" => $bd->getCountMysql($con) , "data" => $categorias);
         } else {
             http_response_code(404);
             $json = array("code" => 404, "message" => "Categoria não encontrada!");

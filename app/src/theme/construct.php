@@ -40,6 +40,7 @@ class construct_theme
     //Importação de CSS 
     $ger->imprimir('<link href="' . $path . 'lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">');
     $ger->imprimir('<link href="' . $path . 'lib/font-awesome/css/font-awesome.css" rel="stylesheet">');
+    $ger->imprimir('<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">');
     $ger->imprimir('<link rel="stylesheet" type="text/css" href="' . $path . 'css/zabuto_calendar.css">');
     $ger->imprimir('<link rel="stylesheet" type="text/css" href="' . $path . 'lib/gritter/css/jquery.gritter.css" />');
     $ger->imprimir('<link href="' . $path . 'css/style.css" rel="stylesheet">');
@@ -66,7 +67,7 @@ class construct_theme
     $ger->imprimir('    <div class="sidebar-toggle-box">');
     $ger->imprimir('        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>');
     $ger->imprimir('    </div>');
-    $ger->imprimir('    <a href="../home/index.php" class="logo"><b>Hambur<span>gueria</span></b></a>');
+    $ger->imprimir('    <a href="../home/index.php" class="logo"><b>BURGUER<span>MASTER</span></b></a>');
     $ger->imprimir('    <div class="top-menu">');
     $ger->imprimir('        <ul class="nav pull-right top-menu">');
     $ger->imprimir('            <li><button onclick="logout();" class="logout" >Logout</button></li>');
@@ -100,8 +101,14 @@ class construct_theme
     $ger = new gerais();
 
     $ger->imprimir('<li class="sub-menu">');
+    $ger->imprimir('    <a href="/../public/cardapio/index.php">');
+    $ger->imprimir('        <i class="fa-regular fa-file-lines"></i> Cardápio</i>');
+    $ger->imprimir('    </a>');
+    $ger->imprimir('</li>');
+
+    $ger->imprimir('<li class="sub-menu">');
     $ger->imprimir('    <a href="javascript:;">');
-    $ger->imprimir('        <i class="fa fa-angle-right">Administrativos</i>');
+    $ger->imprimir('        <i class="fa-solid fa-users-gear"></i> Administrativos</i>');
     $ger->imprimir('        <span></span>');
     $ger->imprimir('    </a>');
     $ger->imprimir('        <ul class="sub">');
@@ -115,12 +122,18 @@ class construct_theme
 
     $ger->imprimir('<li class="sub-menu">');
     $ger->imprimir('    <a href="javascript:;">');
-    $ger->imprimir('        <i class="fa fa-angle-right">Usuários</i>');
+    $ger->imprimir('        <i class="fa-solid fa-users"></i> Usuários</i>');
     $ger->imprimir('        <span></span>');
     $ger->imprimir('    </a>');
     $ger->imprimir('        <ul class="sub">');
     $ger->imprimir("            <li><a href='../usuarios/list_user.php'>Cadastrar</a></li>");
     $ger->imprimir('        </ul>');
+    $ger->imprimir('</li>');
+    
+    $ger->imprimir('<li class="sub-menu">');
+    $ger->imprimir('    <a href="../produtos/list_pedidos.php">');
+    $ger->imprimir('        <i class="fa-solid fa-receipt"></i> Pedidos</i>');
+    $ger->imprimir('    </a>');
     $ger->imprimir('</li>');
   }
 
@@ -137,6 +150,7 @@ class construct_theme
     $ger->imprimir('<footer class="site-footer">');
     $ger->imprimir('    <div class="text-center">');
     $ger->imprimir('        <p>&copy; Copyrights <strong></strong>. Versão: 1.0 </p>');
+    $ger->imprimir('        <p>Contato: <strong></strong>. oliveira.gbr@gmail.com </p>');
     $ger->imprimir('    </div>');
     $ger->imprimir('</footer>');
 

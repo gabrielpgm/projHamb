@@ -1,0 +1,400 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    background-size: auto;
+    background-image: url('/public/uploads/fundo6.png');
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Branco com 50% de transparência */
+    background-blend-mode: overlay; /* Combina a cor com a imagem */
+    overflow: auto
+}
+.superior{
+    display: flex;   
+    width: 1000px; /* Ou a largura desejada */
+    height: 100px; /* Ou a altura desejada */
+    margin: 0 auto;
+    background-image: url('/public/uploads/capa4.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    border-radius: 0 0 5px 5px;
+    justify-content: flex-end; /* Alinha o conteúdo à direita */
+    position: relative; /* Garante que a posição seja relativa ao pai */
+}
+
+.copy {
+    position: fixed;
+    width: 1000px; /* A largura da div */
+    height: 40px; /* A altura da div */
+    bottom: 0; /* Fica no fundo da página */
+    left: 50%; /* Centraliza a div horizontalmente */
+    transform: translateX(-50%); /* Ajusta para a centralização exata */
+    background-color: #c0392b; /* Cor de fundo vermelha */
+    border-radius: 5px 5px 0 0; /* Bordas arredondadas na parte superior */
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    font-size: 16px; /* Tamanho da fonte */
+    padding: 0 20px; /* Espaçamento extra nas laterais, se necessário */
+}
+.copy h2 {
+    margin: 0; /* Remove a margem do h2 */
+    font-size: 18px; /* Ajusta o tamanho da fonte, se necessário */
+    color: white !important;
+}
+
+.dadoscont{
+    margin: 5px auto;
+    margin-left: 10px;
+}
+
+.dadoscont span{
+    color: white;
+    margin-left: 10px;
+}
+
+span:{
+    color: white;
+    margin-left: 10px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+img {
+    border-radius: 5px; /* Ajuste o valor conforme necessário */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+h2 {
+    color: #e67e22;
+    border-bottom: 2px solid #e67e22;
+    padding-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+p {
+    color: #999;
+}
+
+/* -----------------CARRINHO */
+.char {
+    position: relative;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 900;
+    
+}
+.whatsapp-button{
+    all: unset;
+    background: none;
+    color: #ddd;
+    font-size: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+
+}
+#botao{
+     cursor: pointer; 
+     background-color: green; 
+     color: white; border-radius: 10px; 
+     border: 1px;
+     
+}
+
+
+.char button{
+
+    all: unset;
+    background: none;
+    color: #ddd;
+    font-size: 20px;
+    margin-right: 20px;
+    z-index: 10;
+}
+
+
+.char button:last-child {
+    margin-right: 10px;
+}
+
+.carrinho {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100vh; /* Altura ajustada para ocupar toda a janela */
+    background-color: #c0392b;
+    color: rgb(0, 0, 0);
+    z-index: 999;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    border-radius: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column; /* Alinhar o conteúdo verticalmente */
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    align-items: center; /* Centraliza horizontalmente */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); ;
+}
+
+.carrinho.visivel {
+    opacity: 10;
+    transform: translateY(0);
+}
+
+.carrinho-title {
+    text-align: center;
+    font-size: 2rem;
+    padding-top: 1rem;
+}
+
+.carrinho-content {
+    flex: 1; 
+    padding: 1rem; 
+    display: flex;         /* Muda de grid para flex */
+    flex-direction: column; /* Alinha os itens em coluna */
+    gap: 10px;             /* Espaçamento entre os produtos */
+}
+
+.carrinho-footer {
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    position: sticky; /* Mantém o botão fixo no rodapé do carrinho */
+    bottom: 0; /* Posiciona na parte inferior */
+}
+.carrinho-footer button {
+    background-color: green;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+.carrinho-footer button:hover {
+    
+    background-color: #006400; 
+}
+
+
+.pedidoscar {
+    background-color: rgb(229, 228, 228);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 5px;
+    width: 97%;
+    height: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.pedidoscar .image {
+    flex-shrink: 0;
+    width: 50px; /* Largura fixa para a imagem */
+    height: 80px; /* Altura fixa para a imagem */
+    margin-right: 5px; /* Espaçamento entre imagem e os outros campos */
+    display: flex;
+    justify-content: center; /* Centraliza a imagem horizontalmente dentro da div */
+    align-items: center; /* Centraliza a imagem verticalmente dentro da div */
+
+}
+
+.pedidoscar .nome {
+    width: 100px;
+    flex-grow: 1; /* Permite que o nome ocupe o espaço restante */
+    white-space: normal; /* Permite a quebra de linha caso o nome seja muito longo */
+    word-wrap: break-word; /* Quebra a palavra longa se necessário */
+    margin-right: 5px; /* Espaçamento entre nome e os outros campos */
+}
+
+.qtd {
+    display: flex; /* Usa Flexbox para alinhar os itens em linha */
+    justify-content: center; /* Garante que o conteúdo estará centralizado horizontalmente */
+    align-items: center;
+    border: 1px solid #ccc; /* Borda de 2px, cor cinza clara */
+    border-radius: 4px;
+    height: 30px;
+}
+
+
+.pedidoscar .preco {
+    width: 80px; /* Largura fixa para quantidade e preço */
+    text-align: center;
+}
+
+.qtd button {
+    display: flex; /* Torna o botão um contêiner flexível */
+    justify-content: center; /* Centraliza horizontalmente o conteúdo dentro do botão */
+    align-items: center; /* Centraliza verticalmente o conteúdo dentro do botão */
+    width: 17px;
+    height: 17px;
+    margin-left: 3px; /* Espaçamento para o botão de diminuição */
+    margin-right: 3px; /* Espaçamento para o botão de aumento */
+    padding: 0; /* Remove o padding extra */
+    font-size: 12px; /* Ajusta o tamanho da fonte se necessário */
+    cursor: pointer;
+}
+
+
+/* ---------- teste */
+
+
+.container h1 {
+    text-align: center;
+    color: #333;
+}
+
+.categoria {
+    margin-bottom: 20px;
+}
+
+.categoria h2 {
+    color: #c0392b; /* Cor da categoria */
+    border-bottom: 2px solid #e74c3c;
+    padding-bottom: 5px;
+}
+
+.produtos {
+    list-style: none;
+    padding: 0;
+}
+
+.produto {
+    display: flex;
+    align-items: center; /* Alinha os itens verticalmente */
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.produto-imagem {
+    margin-right: 20px; /* Espaço entre imagem e os outros itens */
+}
+
+.produto-nome {
+    width: 200px; /* Largura fixa para o nome do produto */
+    overflow: hidden;
+    white-space: nowrap; /* Mantém o texto em uma única linha */
+    text-align: center; /* Centraliza o texto horizontalmente */
+    margin: 0 auto; /* Opcional, caso queira centralizar o elemento em relação ao container */
+}
+
+
+.produto-descricao {
+    width: 250px; /* Largura fixa permanece */
+    word-wrap: break-word; /* Permite quebra de linha em palavras longas */
+    white-space: normal; /* Permite quebras de linha para textos maiores */
+    overflow: visible; /* Garante que todo o conteúdo seja exibido */
+    line-height: 1.5; /* Ajusta o espaçamento entre as linhas */
+}
+
+.produto-preco {
+    width: 120px;  /* Largura fixa para o preço */
+    text-align: left;  /* Centraliza o preço */
+    font-weight: bold;
+}
+.produto-botao {
+    width: 50px;  /* Largura fixa para o botão */
+    display: flex;
+    justify-content: center;
+}
+.produto-botao button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.produto-botao button i {
+    font-size: 20px; /* Tamanho do ícone dentro do botão */
+}
+
+.produto-botao button:hover {
+    background-color: #45a049;
+}
+
+
+.sem-produtos, .sem-categoria {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.adicionar-btn {
+    background-color: #2ecc71; /* Verde */
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+.adicionar-btn:hover {
+    background-color: #27ae60; /* Cor mais escura ao passar o mouse */
+}
+
+
+/* Estilo inicial para o ícone do carrinho */
+.fa-cart-shopping {
+    transition: all 0.3s ease;
+}
+
+/* Efeito pulsante e cor verde quando o carrinho tiver itens */
+.carrinho-com-itens {
+    animation: pulsar 1s ease-out infinite;
+    color: green; /* Cor verde */
+}
+
+/* Animação de pulsação */
+@keyframes pulsar {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
